@@ -1,5 +1,5 @@
-import logging
 from typing import Dict
+from google.adk.tools.tool_context import ToolContext
 import uuid
 
 
@@ -24,7 +24,7 @@ KNOWLEDGE_BASE = {
 }
 
 
-def search_support_knowledge(query: str) -> Dict[str, str]:
+def search_support_knowledge(query: str, tool_context: ToolContext) -> Dict[str, str]:
     """Search the demo customer-support knowledge base."""
     query_lower = query.lower()
 
@@ -32,21 +32,23 @@ def search_support_knowledge(query: str) -> Dict[str, str]:
         if topic in query_lower:
             return {
                 "status": "found",
+                "correlation_id": tool_context.invocation_id,
                 "topic": topic,
                 "content": answer,
             }
 
     return {
         "status": "not_found",
+        "correlation_id": tool_context.invocation_id,
         "topic": "unknown",
         "content": "No matching support policy was found.",
     }
 
 
-def create_support_ticket(issue: str, customer_id: str = "demo-customer") -> Dict[str, str]:
+def create_support_ticket(issue: str, tool_context: ToolContext, customer_id: str = "demo-customer") -> Dict[str, str]:
     """Create a simulated support ticket for issues requiring action."""
     ticket_id = f"TKT-{uuid.uuid4().hex[:8].upper()}"
-    correlation_id = f"TRACE-{uuid.uuid4().hex[:12].upper()}"
+    correlation_id = tool_context.invocation_id
 
     return {
         "status": "created",
@@ -56,7 +58,3 @@ def create_support_ticket(issue: str, customer_id: str = "demo-customer") -> Dic
         "issue": issue,
     }
 
-
-def generate_correlation_id() -> str:
-    """Generate a correlation ID for tracing a support operation."""
-    return f"TRACE-{uuid.uuid4().hex[:12].upper()}"

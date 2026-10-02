@@ -4,6 +4,11 @@ from google.adk.tools.preload_memory_tool import PreloadMemoryTool
 from .tools import search_support_knowledge, create_support_ticket
 
 
+async def trace_agent_start(ctx):
+    """Log the ADK invocation ID as requests move between agents."""
+    print(f"[TRACE] correlation_id={ctx.invocation_id} agent={ctx.agent_name}")
+
+
 async def save_session_to_memory(ctx):
     """Persist the current conversation to the configured memory service."""
     await ctx.add_session_to_memory()
@@ -25,6 +30,7 @@ password/account access, damaged products, or related support policies.
 Return the relevant information clearly and do not invent policies.
 """,
     tools=[search_support_knowledge],
+    before_agent_callback=trace_agent_start,
 )
 
 
@@ -45,6 +51,7 @@ Determine whether:
 Give a concise customer-support response.
 Do not invent company policies.
 """,
+    before_agent_callback=trace_agent_start,
 )
 
 
@@ -62,6 +69,7 @@ When a ticket is created, clearly return both the ticket ID and correlation ID,
 and explain that the issue has been escalated.
 """,
     tools=[create_support_ticket],
+    before_agent_callback=trace_agent_start,
 )
 
 
@@ -86,5 +94,6 @@ Keep responses concise, grounded, and customer friendly.
         action_agent,
     ],
     tools=[PreloadMemoryTool()],
+    before_agent_callback=trace_agent_start,
     after_agent_callback=save_session_to_memory,
 )
