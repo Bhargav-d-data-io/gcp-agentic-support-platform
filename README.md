@@ -1,6 +1,6 @@
 # GCP Agentic Customer Support Platform
 
-A cloud-deployed multi-agent customer support application built with **Google Agent Development Kit (ADK)**, **Gemini 2.5 Flash on Vertex AI**, **Python**, and **Google Cloud Run**.
+A cloud-deployed multi-agent customer support application built with **Google Agent Development Kit (ADK)**, **Gemini 2.5 Flash on Vertex AI**, **Python**, **Google Cloud Run**, and **Vertex AI Agent Engine**.
 
 The platform uses a root customer-support orchestrator to route requests to specialized retrieval, reasoning, and action agents. The current implementation supports knowledge retrieval, support-ticket creation, ADK session handling, correlation IDs for support operations, and authenticated deployment on Google Cloud Run.
 
@@ -53,6 +53,11 @@ The application is organized around a Google ADK root orchestrator with three sp
 - Private authenticated **Google Cloud Run** service
 - Container build and storage through **Cloud Build** and **Artifact Registry**
 - Deployed ADK API endpoints for session creation and agent execution
+- **Vertex AI Agent Engine** managed deployment
+- Managed Agent Engine session continuity
+- **Memory Bank** persistence using an ADK after-agent callback
+- **PreloadMemoryTool** integration for long-term memory retrieval
+- Verified cross-session recall of stored user preferences
 - Git and GitHub source control
 
 ## Verified Cloud Deployment
@@ -95,10 +100,11 @@ The Cloud Run service is configured for authenticated access rather than unrestr
 | LLM | Gemini 2.5 Flash |
 | AI Platform | Vertex AI |
 | Language | Python |
-| Compute | Google Cloud Run |
+| Compute | Google Cloud Run + Vertex AI Agent Engine |
 | Container Build | Cloud Build |
 | Container Registry | Artifact Registry |
-| Session Layer | ADK In-Memory Session Service |
+| Session Layer | ADK In-Memory Sessions + Managed Agent Engine Sessions |
+| Long-Term Memory | Vertex AI Memory Bank + ADK PreloadMemoryTool |
 | Source Control | Git + GitHub |
 
 ## Local Setup
@@ -184,13 +190,16 @@ gcp-agentic-support-platform/
 - Cloud Run deployment
 - Authenticated Cloud Run access
 - Deployed ADK API execution
+- Vertex AI Agent Engine managed deployment
+- Managed Agent Engine session continuity
+- Memory Bank persistence through ADK callback integration
+- PreloadMemoryTool-based long-term memory retrieval
+- Cross-session recall of stored user preferences
 
 ### Planned Enhancements
 
 The following capabilities are planned and are **not represented as completed features**:
 
-- Vertex AI Agent Engine / managed runtime evaluation
-- Managed Memory Bank integration
 - Embedding-based vector retrieval
 - Tenant-aware persistent memory
 - End-to-end correlation ID propagation across all agent and tool layers
