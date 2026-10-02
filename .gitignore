@@ -4,3 +4,11 @@ __pycache__/
 .env
 *.log
 .DS_Store
+
+# Local ADK runtime data
+.adk/
+**/.adk/
+*.db
+
+# Backup files
+*.backup
