@@ -47,7 +47,7 @@ The application is organized around a Google ADK root orchestrator with three sp
 - ADK agent-to-agent transfer and tool calling
 - Support knowledge retrieval tool
 - Support-ticket creation tool
-- Correlation ID generation for support-ticket operations
+- ADK invocation-based correlation IDs propagated across orchestrator, specialized agents, and tool results
 - ADK session-service integration and multi-turn session demo
 - Containerized deployment through the ADK Cloud Run workflow
 - Private authenticated **Google Cloud Run** service
@@ -186,7 +186,7 @@ gcp-agentic-support-platform/
 - Retrieval-agent routing and knowledge-tool execution
 - Action-agent routing and support-ticket creation
 - Gemini 2.5 Flash integration through Vertex AI
-- Correlation ID generation for support-ticket operations
+- ADK invocation-based correlation IDs propagated across orchestrator, specialized agents, and tool results
 - Cloud Run deployment
 - Authenticated Cloud Run access
 - Deployed ADK API execution
@@ -202,7 +202,6 @@ The following capabilities are planned and are **not represented as completed fe
 
 - Embedding-based vector retrieval
 - Tenant-aware persistent memory
-- End-to-end correlation ID propagation across all agent and tool layers
 - Cloud Trace / OpenTelemetry integration
 - API Gateway and external ingress
 - Workload Identity and service-to-service authorization
