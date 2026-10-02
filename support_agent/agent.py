@@ -51,8 +51,8 @@ You are the action specialist.
 Use create_support_ticket only when the customer's problem requires
 escalation or follow-up.
 
-When a ticket is created, clearly return the ticket ID and explain that
-the issue has been escalated.
+When a ticket is created, clearly return both the ticket ID and correlation ID,
+and explain that the issue has been escalated.
 """,
     tools=[create_support_ticket],
 )
