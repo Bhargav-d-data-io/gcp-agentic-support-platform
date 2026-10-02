@@ -1,5 +1,12 @@
+
 from google.adk.agents import Agent
+from google.adk.tools.preload_memory_tool import PreloadMemoryTool
 from .tools import search_support_knowledge, create_support_ticket
+
+
+async def save_session_to_memory(ctx):
+    """Persist the current conversation to the configured memory service."""
+    await ctx.add_session_to_memory()
 
 
 retrieval_agent = Agent(
@@ -78,4 +85,6 @@ Keep responses concise, grounded, and customer friendly.
         reasoning_agent,
         action_agent,
     ],
+    tools=[PreloadMemoryTool()],
+    after_agent_callback=save_session_to_memory,
 )
